@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `vaccine` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
+USE `vaccine`;
 -- MySQL dump 10.13  Distrib 8.0.12, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: vaccine
@@ -16,33 +18,38 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `doctor`
+-- Table structure for table `vis`
 --
 
-DROP TABLE IF EXISTS `doctor`;
+DROP TABLE IF EXISTS `vis`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `doctor` (
-  `DoctorID` int(11) NOT NULL AUTO_INCREMENT,
-  `FirstName` varchar(45) DEFAULT NULL,
-  `LastName` varchar(45) DEFAULT NULL,
+CREATE TABLE `vis` (
+  `VisID` int(11) NOT NULL AUTO_INCREMENT,
+  `PublishDate` varchar(45) DEFAULT NULL,
   `VaccinationRecordNo` varchar(45) DEFAULT NULL,
-  `VaccinaterID` int(11) DEFAULT NULL,
-  `AddressID_FK` int(11) NOT NULL,
-  PRIMARY KEY (`DoctorID`),
-  KEY `doctor_ibfk_1` (`AddressID_FK`),
-  CONSTRAINT `doctor_ibfk_1` FOREIGN KEY (`AddressID_FK`) REFERENCES `address` (`addressid`)
+  `ChartNumber` varchar(45) DEFAULT NULL,
+  `DoctorID_FK` int(11) NOT NULL,
+  `PatientID_FK` int(11) NOT NULL,
+  `GuardianID_FK` int(11) NOT NULL,
+  PRIMARY KEY (`VisID`),
+  KEY `DoctorID_FK` (`DoctorID_FK`),
+  KEY `PatientID_FK` (`PatientID_FK`),
+  KEY `GuardianID_FK` (`GuardianID_FK`),
+  CONSTRAINT `vis_ibfk_1` FOREIGN KEY (`DoctorID_FK`) REFERENCES `doctor` (`doctorid`) ON UPDATE CASCADE,
+  CONSTRAINT `vis_ibfk_2` FOREIGN KEY (`PatientID_FK`) REFERENCES `patient` (`patientid`) ON UPDATE CASCADE,
+  CONSTRAINT `vis_ibfk_3` FOREIGN KEY (`GuardianID_FK`) REFERENCES `guardian` (`guardianid`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `doctor`
+-- Dumping data for table `vis`
 --
 
-LOCK TABLES `doctor` WRITE;
-/*!40000 ALTER TABLE `doctor` DISABLE KEYS */;
-INSERT INTO `doctor` VALUES (1,'Tony','Stark','1',1234,1),(2,'Tony','Stark','2',1234,2),(3,'Steve','Rogers','3',2345,3),(4,'Bruce','Banner','4',3456,4),(5,'Phill','Caulson','5',4567,5),(6,'Natasha','Romanov','6',5678,6),(7,'Clinton','Francis','7',6789,7),(8,'Nick','Fury','8',7890,8),(9,'Thanos','Death','9',8901,9),(10,'Wanda','Maximoff','10',9012,10);
-/*!40000 ALTER TABLE `doctor` ENABLE KEYS */;
+LOCK TABLES `vis` WRITE;
+/*!40000 ALTER TABLE `vis` DISABLE KEYS */;
+INSERT INTO `vis` VALUES (1,'01/01/2014','11','101',1,1,1),(2,'03/05/2011','12','102',2,2,2),(3,'10/01/2016','13','103',3,3,3),(4,'06/01/2017','14','104',4,4,4),(5,'08/02/2013','15','105',5,5,5),(6,'01/03/2014','16','106',6,6,6),(7,'01/11/2015','17','107',7,7,7),(8,'01/23/2016','18','108',8,8,8),(9,'04/29/2010','19','109',9,9,9),(10,'02/17/2014','20','110',10,10,10);
+/*!40000 ALTER TABLE `vis` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-01  5:58:38
+-- Dump completed on 2018-08-02  6:02:40
